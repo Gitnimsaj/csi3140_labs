@@ -1,8 +1,12 @@
+let score = 0;
+let Pacman = 0;
+let ghost = 0;
+
 function createGame(n){
     let game = new array[n];
-    let pacman = Math.floor(Math.random() * n);
     let fruit = Math.floor(Math.random() * n);
-    let ghost = Math.floor(Math.random() * n);
+    pacman = Math.floor(Math.random() * n);
+    ghost = Math.floor(Math.random() * n);
 
     while(fruit == pacman){
         fruit = Math.floor(Math.random() * n);
@@ -31,44 +35,61 @@ function createGame(n){
 }
 
 function moveLeft(game){
-    for(let i = 0, n = game.lenght; i<n; i++){
-        if (game[i]=="C"){
-            game[i]="";
-            game[i-1]="C"+game[i-1];
+    game[pacman]="";
+
+    if(pacman == 0){
+        pacman = n-1;
+    }
+    else{
+        pacman = pacman-1;
+    }
+
+    switch(game[pacman]){
+        case ".":
+            score+=1;
             break;
-        }
-        if (game[i]=="C."){
-            game[i]=".";
-            game[i-1]="C"+game[i-1];
+        case "@":
+            score+=5;
             break;
-        }
+        case "^":
+            score=0;
+            game = createGame(game.lenght)
+            break;
+    }
+    if(score == game.lenght + 3){
+        game = createGame(game.lenght);
+    }
+    else{
+        game[pacman] = "C";
     }
 }
 
 function moveRight(game){
-    for(let i = 0, n = game.lenght; i<n; i++){
-        if (game[i]=="C"){
-            game[i]="";
-            if (1 == 0){
-                game[n-1]="C"+game[n-1];
-                break;
-            }
-            else{
-                game[i-1]="C"+game[i+1];
-                break;
-            }
-        }
-        if (game[i]=="C."){
-            if(i==n-1){
-                game[i]=".";
-                game[0]="C"+game[0];
-                break;
-            }
-            else{
-                game[i]=".";
-                game[i-1]="C"+game[i+1];
-                break;
-            }
-        }
+    game[pacman]="";
+
+    if(pacman == n-1){
+        pacman = 0;
+    }
+    else{
+        pacman = pacman+1;
+    }
+
+    switch(game[pacman]){
+        case ".":
+            score+=1;
+            break;
+        case "@":
+            score+=5;
+            break;
+        case "^":
+            score=0;
+            game = createGame(game.lenght)
+            break;
+    }
+    if(score == game.lenght + 3){
+        game = createGame(game.lenght);
+    }
+    else{
+        game[pacman] = "C";
     }
 }
